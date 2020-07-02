@@ -1,5 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
+}
+
+ext {
+    javaMainClass = "com.afterpay.ds.cadence.HelloCadence"
+}
+
+application {
+    mainClassName = javaMainClass
 }
 
 group 'com.afterpay.ds'
@@ -18,6 +27,6 @@ dependencies {
 }
 
 task execute(type: JavaExec) {
-    main = findProperty("mainClass") ?: ""
+    main = findProperty("mainClass") ?: mainClassName
     classpath = sourceSets.main.runtimeClasspath
 }
