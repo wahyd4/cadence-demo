@@ -14,14 +14,14 @@ public class HelloCadence {
     private static Logger logger = Workflow.getLogger(HelloCadence.class);
 
     public static void main(String[] args) {
-        Worker.Factory factory = new Worker.Factory("localhost",7933, "test-domain-au");
-        Worker worker = factory.newWorker("aaa");
+        Worker.Factory factory = new Worker.Factory("192.168.0.249",7933, "domain");
+        Worker worker = factory.newWorker("helloWorldTaskList");
         worker.registerWorkflowImplementationTypes(HelloWorldImpl.class);
         factory.start();
     }
 
     public interface HelloWorld {
-        @WorkflowMethod
+        @WorkflowMethod(executionStartToCloseTimeoutSeconds = 60, taskList = "helloWorldTaskList")
         void sayHello(String name);
 
         @SignalMethod
@@ -45,7 +45,7 @@ public class HelloCadence {
 //            }
 //            logger.info(++count + ": " + greeting + " " + name + "!");
 
-            Workflow.sleep(Duration.ofSeconds(30));
+            Workflow.sleep(Duration.ofSeconds(10));
 
             logger.info(++count + ": " + greeting + " " + name + "!");
         }
