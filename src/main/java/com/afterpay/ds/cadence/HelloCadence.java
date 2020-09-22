@@ -14,7 +14,9 @@ public class HelloCadence {
     private static Logger logger = Workflow.getLogger(HelloCadence.class);
 
     public static void main(String[] args) {
-        Worker.Factory factory = new Worker.Factory("192.168.0.249",7933, "domain");
+        String cadenceUrl = System.getenv("CADENCE_URL");
+        String cadenceDomain = System.getenv("CADENCE_DOMAIN");
+        Worker.Factory factory = new Worker.Factory(cadenceUrl, 7933, cadenceDomain);
         Worker worker = factory.newWorker("helloWorldTaskList");
         worker.registerWorkflowImplementationTypes(HelloWorldImpl.class);
         factory.start();
